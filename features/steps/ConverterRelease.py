@@ -24,6 +24,7 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
+    global name
     name = 'm'
     #raise NotImplementedError(u'STEP: When I have entered name \'m\' as name')
 
@@ -33,6 +34,7 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
+    global quantities
     quantities = []
     #raise NotImplementedError(u'STEP: And I have empty list Quantities')
 
