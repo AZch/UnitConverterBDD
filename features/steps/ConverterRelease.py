@@ -63,3 +63,26 @@ def step_impl(context):
             u'STEP: Then I add a new value named \'m\', I  have 2 lists, one two-dimensional array, one will have \'m\'')
 
 
+@step("I have entered name 'km' as name")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(u'STEP: And I have entered name \'km\' as name')
+
+
+@step("I have list Quantities with value 1000")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(u'STEP: And I have list Quantities with value 1000')
+
+
+@then("I add to new value 'm' and 'km' and matrix quantities 2x2 \(elem\[0\]\[1\] == 0\.001, elem\[1\]\[0\] == 1000\)")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(
+        u'STEP: Then I add to new value \'m\' and \'km\' and matrix quantities 2x2 (elem[0][1] == 0.001, elem[1][0] == 1000)')
