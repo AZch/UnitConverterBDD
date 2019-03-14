@@ -55,12 +55,14 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     global converter
-    if converter.getNames()[0] != "m" \
-            or not isinstance(converter.getNames(), list) \
-            or not isinstance(converter.getQuantities(), list) \
-            or len(converter.getNames()) != 1:
+    if converter.getNames()[0] != "m" or len(converter.getNames()) != 1:
         raise NotImplementedError(
-            u'STEP: Then I add a new value named \'m\', I  have 2 lists, one two-dimensional array, one will have \'m\'')
+            u'STEP: Then I add a new value named \'m\'')
+    if not isinstance(converter.getNames(), list) \
+            or not isinstance(converter.getQuantities(), list):
+        raise NotImplementedError(
+            u'STEP: I  have 2 lists, one two-dimensional array')
+
 
 
 @step("I have entered name 'km' as name")
@@ -70,7 +72,7 @@ def step_impl(context):
     """
     global name
     name = "km"
-    raise NotImplementedError(u'STEP: And I have entered name \'km\' as name')
+    #raise NotImplementedError(u'STEP: And I have entered name \'km\' as name')
 
 
 @step("I have list Quantities with value 1000")
@@ -80,7 +82,7 @@ def step_impl(context):
     """
     global quantities
     quantities = 1000
-    raise NotImplementedError(u'STEP: And I have list Quantities with value 1000')
+    #raise NotImplementedError(u'STEP: And I have list Quantities with value 1000')
 
 @then(
     "I add to new value 'm' and 'km' and matrix quantities 2x2 \(elem\[0\]\[1\] == 0\.001, elem\[1\]\[0\] == 1000 and other one\)")
@@ -90,12 +92,20 @@ def step_impl(context):
     """
     global converter
     if len(converter.getNames()) != 2 \
-            or len(converter.getQuantities()) != 2 \
+            or converter.getNames()[0] != 'm' \
+            or converter.getNames()[1] != 'km':
+        raise NotImplementedError(
+            u'STEP: Then I add to new value \'m\' and \'km\'')
+
+    if len(converter.getQuantities()) != 2 \
             or len(converter.getQuantities()[0]) != 2 \
-            or len(converter.getQuantities()[1]) != 2 \
-            or converter.getQuantities()[0][0] != 1 \
+            or len(converter.getQuantities()[1]) != 2:
+        raise NotImplementedError(
+            u'STEP: matrix quantities 2x2')
+
+    if converter.getQuantities()[0][0] != 1 \
             or converter.getQuantities()[1][1] != 1 \
             or (converter.getQuantities()[0][1] <= 0.00099999 or converter.getQuantities()[0][1] >= 0.001111111111) \
             or (converter.getQuantities()[1][0] <= 999.99999999 or converter.getQuantities()[0][1] >= 1000.000001):
         raise NotImplementedError(
-            u'STEP: Then I add to new value \'m\' and \'km\' and matrix quantities 2x2 (elem[0][1] == 0.001, elem[1][0] == 1000 and other one)')
+            u'STEP: elem[0][1] == 0.001, elem[1][0] == 1000 and other one')
