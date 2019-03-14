@@ -82,9 +82,8 @@ def step_impl(context):
     quantities = 1000
     raise NotImplementedError(u'STEP: And I have list Quantities with value 1000')
 
-
 @then(
-    "I add to new value 'm' and 'km' and matrix quantities 2x2 \(elem\[0\]\[1\] == 0\.001, elem\[1\]\[0\] == 1000 and other zero\)")
+    "I add to new value 'm' and 'km' and matrix quantities 2x2 \(elem\[0\]\[1\] == 0\.001, elem\[1\]\[0\] == 1000 and other one\)")
 def step_impl(context):
     """
     :type context: behave.runner.Context
@@ -97,6 +96,6 @@ def step_impl(context):
             or converter.getQuantities()[0][0] != 1 \
             or converter.getQuantities()[1][1] != 1 \
             or (converter.getQuantities()[0][1] <= 0.00099999 or converter.getQuantities()[0][1] >= 0.001111111111) \
-            or (converter.getQuantities()[1][0] <= 999.99999999 or converter.getQuantities()[0][1] >= 1000.000001) :
+            or (converter.getQuantities()[1][0] <= 999.99999999 or converter.getQuantities()[0][1] >= 1000.000001):
         raise NotImplementedError(
             u'STEP: Then I add to new value \'m\' and \'km\' and matrix quantities 2x2 (elem[0][1] == 0.001, elem[1][0] == 1000 and other one)')
