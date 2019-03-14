@@ -15,4 +15,4 @@ Feature: CheckValue
     And I have entered name 'km' as name
     And I have list Quantities with value 1000
     And I press 'Add'
-    Then I add to new value 'm' and 'km' and matrix quantities 2x2 (elem[0][1] == 0.001, elem[1][0] == 1000)
+    Then I add to new value 'm' and 'km' and matrix quantities 2x2 (elem[0][1] == 0.001, elem[1][0] == 1000 and other one)
