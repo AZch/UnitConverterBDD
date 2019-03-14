@@ -51,7 +51,6 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     converter.addQuantities(name, quantities)
-    print(converter.getNames()[0])
     #raise NotImplementedError(u'STEP: And I press \'Add\'')
 
 
@@ -87,7 +86,7 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     global quantities
-    quantities = 1000
+    quantities = [1000]
     #raise NotImplementedError(u'STEP: And I have list Quantities with value 1000')
 
 @then(
@@ -161,7 +160,7 @@ def step_impl(context):
     """
     global countElem
     for i in range(countElem):
-        converter.addQuantities(names[i], [random.randint(0, 100)] * (i + 1))
+        converter.addQuantities(names[i], [(i + 1)] * i)
     #raise NotImplementedError(
     #    u'STEP: And add them in converter with generate list quantities for them (size list for i not more current size quantities)')
 
@@ -218,5 +217,5 @@ def step_impl(context):
     for i in range(countElem):
         for j in range(countElem):
             if (i < j):
-                if converter.getQuantities()[i][j] != i + 1:
+                if converter.getQuantities()[i][j] < 1.0 / converter.getQuantities()[j][i] - 0.00001 or converter.getQuantities()[j][i] > 1.0 / converter.getQuantities()[i][j] + 0.00001:
                     raise NotImplementedError(u'STEP: And have matrix with elem upper subDiag have 1 / (i(row) + 1)')
