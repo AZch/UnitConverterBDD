@@ -1,3 +1,6 @@
+import random
+import string
+
 from Converter import Converter
 from behave import *
 from hamcrest import assert_that, greater_than
@@ -8,6 +11,9 @@ use_step_matcher("re")
 converter = None
 name = None
 quantities = None
+names = None
+quantitiesMult = None
+countElem = 100
 
 @given("I have my software Converter")
 def step_impl(context):
@@ -109,3 +115,108 @@ def step_impl(context):
             or (converter.getQuantities()[1][0] <= 999.99999999 or converter.getQuantities()[0][1] >= 1000.000001):
         raise NotImplementedError(
             u'STEP: elem[0][1] == 0.001, elem[1][0] == 1000 and other one')
+
+def nameGenerator(sizeName=6, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(sizeName))
+
+@step("I have list of names 'names'")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    global names
+    global countElem
+    names = []
+    for i in range(countElem):
+        names.append(nameGenerator())
+    #raise NotImplementedError(u'STEP: And I have list of names \'names\'')
+
+
+@step("I have two-demensional list of quateres 'quantitiesMult'")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    global countElem
+    global quantitiesMult
+    quantitiesMult = []
+    #raise NotImplementedError(u'STEP: And I have two-demensional list of quateres \'quantitiesMult\'')
+
+
+@when("I add in cycle 100 random names")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    global countElem
+    countElem = 100
+    #raise NotImplementedError(u'STEP: When I add in cycle 100 random names')
+
+
+@step(
+    "add them in converter with generate list quantities for them \(size list for i not more current size quantities\)")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    global countElem
+    for i in range(countElem):
+        converter.addQuantities(names[i], [random.randint(0, 100)] * (i + 1))
+    #raise NotImplementedError(
+    #    u'STEP: And add them in converter with generate list quantities for them (size list for i not more current size quantities)')
+
+
+@then("have matrix with size 100x100")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    global converter
+    global countElem
+    if len(converter.getQuantities()) != countElem:
+        raise NotImplementedError(u'STEP: Then have matrix with size 100')
+    for i in range(countElem):
+        if len(converter.getQuantities()[i]) != countElem:
+            raise NotImplementedError(u'STEP: Then have matrix with size 100x100')
+
+
+@step("have matrix with subDiag have all 1")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+
+    global countElem
+    global converter
+    for i in range(countElem):
+        if converter.getQuantities()[i][i] != 1:
+            raise NotImplementedError(u'STEP: And have matrix with subDiag have all 1')
+
+
+
+@step("have matrix with elem under subDiag have i\(row\) \+ 1")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    global countElem
+    global converter
+    for i in range(countElem):
+        for j in range(countElem):
+            if (i > j):
+                if converter.getQuantities()[i][j] != i + 1:
+                    raise NotImplementedError(u'STEP: And have matrix with elem under subDiag have i(row) + 1')
+
+
+@step("have matrix with elem upper subDiag have 1 / \(i\(row\) \+ 1\)")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    global countElem
+    global converter
+    for i in range(countElem):
+        for j in range(countElem):
+            if (i < j):
+                if converter.getQuantities()[i][j] != i + 1:
+                    raise NotImplementedError(u'STEP: And have matrix with elem upper subDiag have 1 / (i(row) + 1)')
